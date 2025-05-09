@@ -1,24 +1,5 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { useParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs"
-import { 
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { SimpleCodeBlock } from "@/components/simple-code-block"
-import { CheckCircle, Clock, Code, FileText, Folder, Package, Play, Rocket, Smartphone, Youtube } from "lucide-react"
+import { Metadata } from 'next'
+import ProjectSetupClient from './ProjectSetupClient'
 
 // Project type definition
 type Project = {
@@ -75,6 +56,19 @@ export function generateStaticParams() {
   return projectsData.map((project) => ({
     id: project.id,
   }))
+}
+
+export function generateMetadata({ params }: { params: { id: string } }): Metadata {
+  const project = projectsData.find(p => p.id === params.id)
+  
+  return {
+    title: project ? `${project.title} - Setup Guide` : 'Project Setup Guide',
+    description: project?.description || 'Flutter project setup guide',
+  }
+}
+
+export default function ProjectSetupPage({ params }: { params: { id: string } }) {
+  return <ProjectSetupClient id={params.id} projectsData={projectsData} />
 }
 
 // Folder structure for each project type
@@ -276,137 +270,19 @@ class HomeScreen extends StatelessWidget {
   },
 }
 
-export default function ProjectSetupPage() {
-  const params = useParams<{ id: string }>()
-  const [project, setProject] = useState<Project | null>(null)
-  const [currentStep, setCurrentStep] = useState(0)
-  const [setupSections, setSetupSections] = useState<SetupSection[]>([
-    { id: "folder", title: "Create Folder Structure", description: "Set up the recommended folder structure for your project", completed: false },
-    { id: "packages", title: "Install Required Packages", description: "Add the necessary dependencies to your pubspec.yaml", completed: false },
-    { id: "boilerplate", title: "Add Boilerplate Code", description: "Copy starter code to get your project running quickly", completed: false },
-  ])
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    // Find the project based on the ID from params
-    const foundProject = projectsData.find(p => p.id === params.id) || null
-    setProject(foundProject)
-  }, [params.id])
-
-  useEffect(() => {
-    // Calculate progress based on completed sections
-    const completedSections = setupSections.filter(section => section.completed).length
-    setProgress((completedSections / setupSections.length) * 100)
-  }, [setupSections])
-
-  const markSectionComplete = (sectionId: string) => {
-    setSetupSections(prev => 
-      prev.map(section => 
-        section.id === sectionId ? { ...section, completed: true } : section
-      )
-    )
-  }
-
-  // Get folder structure based on project type or use default
-  const getFolderStructure = () => {
-    return project ? (folderStructures[project.id as keyof typeof folderStructures] || folderStructures.default) : folderStructures.default
-  }
-
-  // Get package requirements based on project type or use default
-  const getPackageRequirements = () => {
-    return project ? (packageRequirements[project.id as keyof typeof packageRequirements] || packageRequirements.default) : packageRequirements.default
-  }
-
-  // Get boilerplate code based on project type or use default
-  const getBoilerplateCode = (filename: string) => {
-    if (!project) return ""
-    const projectCode = boilerplateCodes[project.id as keyof typeof boilerplateCodes] || boilerplateCodes.default
-    return projectCode[filename as keyof typeof projectCode] || ""
-  }
-
-  // Renders a file/directory tree
-  const renderFileTree = (items: any[], indent = 0) => {
-    return items.map((item, index) => (
-      <div key={index} className="ml-4">
-        <div className="flex items-center py-1">
-          {item.type === "directory" ? (
-            <Folder className="h-4 w-4 mr-2 text-blue-500" />
-          ) : (
-            <FileText className="h-4 w-4 mr-2 text-gray-500" />
-          )}
-          <span>{item.name}</span>
-        </div>
-        {item.children && renderFileTree(item.children, indent + 1)}
+// Renders a file/directory tree
+const renderFileTree = (items: any[], indent = 0) => {
+  return items.map((item, index) => (
+    <div key={index} className="ml-4">
+      <div className="flex items-center py-1">
+        {item.type === "directory" ? (
+          <Folder className="h-4 w-4 mr-2 text-blue-500" />
+        ) : (
+          <FileText className="h-4 w-4 mr-2 text-gray-500" />
+        )}
+        <span>{item.name}</span>
       </div>
-    ))
-  }
-
-  if (!project) {
-    return (
-      <div className="container py-12">
-        <div className="brutalist-card p-8 text-center">
-          <h1 className="text-2xl font-bold mb-4">Project Not Found</h1>
-          <p className="text-muted-foreground mb-6">The project you're looking for doesn't exist.</p>
-          <Button asChild>
-            <Link href="/projects">Back to Projects</Link>
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="noise-bg">
-      {/* Header */}
-      <section className="py-12 bg-gradient-to-r from-primary to-accent text-white">
-        <div className="container">
-          <div className="flex flex-col md:flex-row gap-8 items-center">
-            <div className="md:w-1/3">
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={350}
-                height={200}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-            <div className="md:w-2/3">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">{project.title}</h1>
-              <p className="text-xl opacity-90 mb-6">{project.description}</p>
-              
-              <div className="flex flex-wrap gap-2 mb-6">
-                <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm flex items-center">
-                  <Clock className="h-4 w-4 mr-2" />
-                  {project.timeToComplete}
-                </div>
-                <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                  Difficulty: {project.difficulty}
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.skills.map(skill => (
-                  <span key={skill} className="bg-white/10 text-white text-sm px-3 py-1 rounded-full">{skill}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div className="container py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="w-full lg:w-1/4">
-            <div className="brutalist-card p-6 sticky top-6">
-              <h2 className="text-xl font-bold mb-4">Setup Progress</h2>
-              
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-                <div className="bg-primary h-2.5 rounded-full" style={{ width: `${progress}%` }}></div>
-              </div>
-              
-              <div className="space-y-3">
-                {setupSections.map((section, index) => (
-                  <div 
-                    key={section.id} 
-                    className={`
+      {item.children && renderFileTree(item.children, indent + 1)}
+    </div>
+  ))
+}
