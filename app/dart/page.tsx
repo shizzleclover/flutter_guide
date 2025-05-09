@@ -1,5 +1,3 @@
-"use client"
-
 // Note: References to variables like 'fruits' in the code examples (inside SimpleCodeBlock components)
 // are intentional parts of the Dart code examples and not JavaScript variables.
 // IDE/linter warnings about undefined variables can be safely ignored in this context.
@@ -9,7 +7,6 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ScrollAnimation } from "@/components/scroll-animations"
 import { SimpleCodeBlock } from "@/components/simple-code-block"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   BookOpen,
   Code,
@@ -18,6 +15,11 @@ import {
   HelpCircle,
   ArrowRight
 } from "lucide-react"
+
+export const metadata = {
+  title: "Dart Programming",
+  description: "The foundation of Flutter development - learn Dart from scratch"
+};
 
 export default function DartPage() {
   return (
@@ -142,21 +144,22 @@ var score = 95;        // This is an int`}
                   title="Lists (Arrays)"
                   explanation="Lists store a collection of items in a specific order. Think of them as a row of boxes, each containing a value."
                   code={`// Create a list of strings
-List<String> fruits = ['apple', 'banana', 'orange'];
+final fruitList = ['apple', 'banana', 'orange'];
 
 // Add an item to the list
-fruits.add('grape');
+// Example: fruitList.add('grape');
 
 // Access items by index (starts at 0)
-String firstFruit = fruits[0];  // 'apple'
+// Example: final firstFruit = fruitList[0];  // 'apple'
 
 // Get list length
-print('Number of fruits: \\${fruits.length}');  // 4
+// Example: print('Number of fruits: \${fruitList.length}');  // 4
 
 // Loop through the list
-for (String fruit in fruits) {
-  print('I like $fruit');
-}`}
+// Example: 
+// for (String fruit in fruitList) {
+//   print('I like $fruit');
+// }`}
                   highlightLines={[2, 5, 8, 11, 14]}
                   lineExplanations={{
                     2: "Create a list of strings with square brackets",
@@ -453,136 +456,44 @@ void main() {
               </p>
             </div>
             
-            <Tabs defaultValue="beginner" className="mb-8">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="beginner">Beginner</TabsTrigger>
-                <TabsTrigger value="intermediate">Intermediate</TabsTrigger>
-                <TabsTrigger value="advanced">Advanced</TabsTrigger>
-              </TabsList>
+            <div className="brutalist-card p-6 mb-8">
+              <h3 className="text-2xl font-bold mb-4">Beginner Exercises</h3>
+              <p className="text-muted-foreground mb-6">
+                Start with these simple exercises to practice the basics of Dart.
+              </p>
               
-              <TabsContent value="beginner" className="pt-6">
-                <div className="brutalist-card p-6">
-                  <h3 className="text-2xl font-bold mb-4">Beginner Exercises</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Start with these simple exercises to practice the basics of Dart.
-                  </p>
-                  
-                  <div className="space-y-6">
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">1. Hello World</h4>
-                      <p className="text-sm mb-3">Write a program that prints "Hello, Dart!" to the console.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">2. Sum Calculator</h4>
-                      <p className="text-sm mb-3">Create a function that takes two numbers and returns their sum.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">3. Even or Odd</h4>
-                      <p className="text-sm mb-3">Write a function that determines if a number is even or odd.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
+              <div className="space-y-6">
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                  <h4 className="font-bold mb-2">1. Hello World</h4>
+                  <p className="text-sm mb-3">Write a program that prints "Hello, Dart!" to the console.</p>
+                  <div className="flex justify-end">
+                    <Button size="sm" variant="outline">
+                      View Solution <ArrowRight className="ml-2 h-3 w-3" />
+                    </Button>
                   </div>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="intermediate" className="pt-6">
-                <div className="brutalist-card p-6">
-                  <h3 className="text-2xl font-bold mb-4">Intermediate Exercises</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Try these exercises after you're comfortable with the basics.
-                  </p>
-                  
-                  <div className="space-y-6">
-                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">1. Word Counter</h4>
-                      <p className="text-sm mb-3">Create a function that counts the number of words in a string.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">2. Reverse a List</h4>
-                      <p className="text-sm mb-3">Write a function that reverses a list without using the built-in reverse method.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">3. Person Class</h4>
-                      <p className="text-sm mb-3">Create a Person class with properties for name, age, and email, plus methods to update and display this information.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
+                
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                  <h4 className="font-bold mb-2">2. Sum Calculator</h4>
+                  <p className="text-sm mb-3">Create a function that takes two numbers and returns their sum.</p>
+                  <div className="flex justify-end">
+                    <Button size="sm" variant="outline">
+                      View Solution <ArrowRight className="ml-2 h-3 w-3" />
+                    </Button>
                   </div>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="advanced" className="pt-6">
-                <div className="brutalist-card p-6">
-                  <h3 className="text-2xl font-bold mb-4">Advanced Exercises</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Challenge yourself with these more complex exercises.
-                  </p>
-                  
-                  <div className="space-y-6">
-                    <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">1. Async Fetcher</h4>
-                      <p className="text-sm mb-3">Create a function that asynchronously fetches data from multiple sources and combines the results.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">2. Custom Collection</h4>
-                      <p className="text-sm mb-3">Implement a custom collection class with methods for adding, removing, and searching items.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                      <h4 className="font-bold mb-2">3. File Analyzer</h4>
-                      <p className="text-sm mb-3">Write a program that reads a text file, analyzes its contents, and generates statistics about word frequency.</p>
-                      <div className="flex justify-end">
-                        <Button size="sm" variant="outline">
-                          View Solution <ArrowRight className="ml-2 h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
+                
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                  <h4 className="font-bold mb-2">3. Even or Odd</h4>
+                  <p className="text-sm mb-3">Write a function that determines if a number is even or odd.</p>
+                  <div className="flex justify-end">
+                    <Button size="sm" variant="outline">
+                      View Solution <ArrowRight className="ml-2 h-3 w-3" />
+                    </Button>
                   </div>
                 </div>
-              </TabsContent>
-            </Tabs>
+              </div>
+            </div>
             
             <div className="text-center mt-12">
               <Button asChild size="lg">

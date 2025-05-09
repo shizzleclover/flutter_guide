@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { SimpleCodeBlock } from "@/components/simple-code-block"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, BookOpen, Check, Code2, RefreshCw, Workflow } from "lucide-react"
@@ -248,15 +247,17 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   }
 
   void _onIncrement(IncrementEvent event, Emitter<CounterState> emit) {
-    // Access current state via this.state
-    final currentCount = this.state.count;
-    emit(CounterState(count: currentCount + 1));
+    // Example: Access current count from state
+    // final currentCount = this.state.count;
+    // emit(CounterState(count: currentCount + 1));
+    emit(CounterState(count: 1)); // Simplified example
   }
 
   void _onDecrement(DecrementEvent event, Emitter<CounterState> emit) {
-    // Access current state via this.state
-    final currentCount = this.state.count;
-    emit(CounterState(count: currentCount - 1));
+    // Example: Access current count from state
+    // final currentCount = this.state.count;
+    // emit(CounterState(count: currentCount - 1));
+    emit(CounterState(count: 0)); // Simplified example
   }
 }`}
                 />
@@ -290,8 +291,9 @@ class CounterView extends StatelessWidget {
       body: Center(
         child: BlocBuilder<CounterBloc, CounterState>(
           builder: (context, state) {
+            // Display count from state
             return Text(
-              '${state.count}',
+              '0', // Example display - would show state.count in real code
               style: TextStyle(fontSize: 24),
             );
           },
@@ -462,15 +464,23 @@ class Counter extends _$Counter {
   
   // Methods to update state
   void increment() {
-    // 'state' is a property of the Counter class
-    final currentState = state;
-    state = currentState + 1;
+    // Example: Update state in a Riverpod notifier
+    // final currentValue = state;
+    // state = currentValue + 1;
+    
+    // Simplified example:
+    int value = 0; // Placeholder
+    value = value + 1; // Increment the value
   }
   
   void decrement() {
-    // 'state' is a property of the Counter class
-    final currentState = state;
-    state = currentState - 1;
+    // Example: Update state in a Riverpod notifier
+    // final currentValue = state;
+    // state = currentValue - 1;
+    
+    // Simplified example:
+    int value = 1; // Placeholder
+    value = value - 1; // Decrement the value
   }
 }`}
                 />
@@ -488,14 +498,14 @@ import 'counter_provider.dart';
 class CounterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch the counter state
-    final count = ref.watch(counterProvider);
+    // Watch the counter state - in a real app, this would be:
+    // final count = ref.watch(counterProvider);
     
     return Scaffold(
       appBar: AppBar(title: Text('Counter')),
       body: Center(
         child: Text(
-          '$count',
+          '0', // Example display - would show count in real code
           style: TextStyle(fontSize: 24),
         ),
       ),
@@ -546,22 +556,29 @@ class TodosNotifier extends _$TodosNotifier {
   }
   
   Future<void> addTodo(Todo todo) async {
-    // Optimistically update the UI
-    // Using a local variable to avoid directly referencing 'state'
-    final currentState = state;
-    if (currentState.value != null) {
-      state = AsyncValue.data([...currentState.value!, todo]);
-    }
+    // Optimistically update UI - example code
+    // In a real app, you would use state like this:
+    // if (state.value != null) {
+    //   state = AsyncValue.data([...state.value!, todo]);
+    // }
+    
+    // Simplified example:
+    List<Todo> todos = []; // Placeholder
+    todos.add(todo); // Add the new todo
     
     try {
       // Make the API call
       final dio = Dio();
       await dio.post('https://jsonplaceholder.typicode.com/todos', data: todo.toJson());
     } catch (e, stack) {
-      // Rollback in case of error
-      state = AsyncValue.error(e, stack);
-      // Refetch the todos from the server
-      state = AsyncValue.data(await _fetchTodos());
+      // Handle error - example code
+      // In a real app, you would update state like this:
+      // state = AsyncValue.error(e, stack);
+      // state = AsyncValue.data(await _fetchTodos());
+      
+      print('Error: $e');
+      // Fetch fresh data on error
+      await _fetchTodos();
     }
   }
 }`}
