@@ -152,24 +152,24 @@ class ProductsPage extends StatelessWidget {
           document: gql(getProductsQuery),
           fetchPolicy: FetchPolicy.cacheAndNetwork,
         ),
-        builder: (result, {fetchMore, refetch}) {
+        builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.isLoading) {
             return Center(child: CircularProgressIndicator());
           }
           
           if (result.hasException) {
-            return Center(child: Text('Error: \\${result.exception.toString()}'));
+            return Center(child: Text('Error: ' + result.exception.toString()));
           }
           
-          final products = result.data?['products'] as List<dynamic>;
+          final List<dynamic> products = result.data?['products'] ?? [];
           
           return ListView.builder(
             itemCount: products.length,
             itemBuilder: (context, index) {
-              final product = products[index];
+              final Map<String, dynamic> product = products[index];
               return ListTile(
                 title: Text(product['name']),
-                subtitle: Text('\\$\\${product["price"]}'),
+                subtitle: Text('\$' + product['price'].toString()),
               );
             },
           );
