@@ -252,14 +252,16 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   }
 
   void _onIncrement(IncrementEvent event, Emitter<CounterState> emit) {
-    emit(CounterState(count: state.count + 1));
+    // The 'state' here refers to the current state of the bloc
+    emit(CounterState(count: this.state.count + 1));
   }
 
   void _onDecrement(DecrementEvent event, Emitter<CounterState> emit) {
-    emit(CounterState(count: state.count - 1));
+    // The 'state' here refers to the current state of the bloc
+    emit(CounterState(count: this.state.count - 1));
   }
 }`}
-                    highlightLines={[5, 6, 7, 8, 11, 12, 15, 16]}
+                    highlightLines={[5, 6, 7, 8, 11, 12, 13, 16, 17, 18]}
                   />
                 </TabsContent>
 
@@ -471,14 +473,16 @@ class Counter extends _$Counter {
   
   // Methods to update state
   void increment() {
+    // 'state' here refers to the Counter class's state property
     state = state + 1;
   }
   
   void decrement() {
+    // 'state' here refers to the Counter class's state property
     state = state - 1;
   }
 }`}
-                    highlightLines={[6, 7, 8, 9, 10, 14, 15, 18, 19]}
+                    highlightLines={[6, 7, 8, 9, 10, 14, 15, 16, 19, 20, 21]}
                   />
                 </TabsContent>
 
@@ -552,6 +556,7 @@ class TodosNotifier extends _$TodosNotifier {
   
   Future<void> addTodo(Todo todo) async {
     // Optimistically update the UI
+    // 'state' here refers to the TodosNotifier class's state property
     state = AsyncValue.data([...state.value!, todo]);
     
     try {
@@ -566,7 +571,7 @@ class TodosNotifier extends _$TodosNotifier {
     }
   }
 }`}
-                    highlightLines={[7, 8, 9, 10, 11, 21, 22, 23]}
+                    highlightLines={[7, 8, 9, 10, 11, 21, 22, 23, 24]}
                   />
                 </TabsContent>
               </Tabs>
