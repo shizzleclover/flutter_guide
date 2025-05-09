@@ -158,7 +158,7 @@ class ProductsPage extends StatelessWidget {
           }
           
           if (result.hasException) {
-            return Center(child: Text('Error: ${result.exception.toString()}'));
+            return Center(child: Text('Error: \\${result.exception.toString()}'));
           }
           
           final products = result.data?['products'] as List<dynamic>;
@@ -169,7 +169,7 @@ class ProductsPage extends StatelessWidget {
               final product = products[index];
               return ListTile(
                 title: Text(product['name']),
-                subtitle: Text('\$${product['price']}'),
+                subtitle: Text('\\$\\${product["price"]}'),
               );
             },
           );

@@ -357,11 +357,11 @@ void main() {
   fruits.add('grape');
   
   // Print the list's length
-  print('Total fruits: \${fruits.length}');
+  print('Total fruits: \\${fruits.length}');
   
   // Use a for loop to print each fruit
   for (int i = 0; i < fruits.length; i++) {
-    print('Fruit \${i+1}: \${fruits[i]}');
+    print('Fruit \\${i+1}: \\${fruits[i]}');
   }
   
   // Alternative: using for-in loop

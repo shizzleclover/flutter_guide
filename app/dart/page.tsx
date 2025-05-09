@@ -151,7 +151,7 @@ fruits.add('grape');
 String firstFruit = fruits[0];  // 'apple'
 
 // Get list length
-print('Number of fruits: \${fruits.length}');  // 4
+print('Number of fruits: \\${fruits.length}');  // 4
 
 // Loop through the list
 for (String fruit in fruits) {
