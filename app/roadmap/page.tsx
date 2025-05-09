@@ -22,6 +22,11 @@ import {
   Users,
 } from "lucide-react"
 
+export const metadata = {
+  title: "Flutter Roadmap",
+  description: "A step-by-step guide to learning Flutter and becoming a mobile app developer from scratch."
+};
+
 export default function RoadmapPage() {
   return (
     <div className="noise-bg">
@@ -224,7 +229,7 @@ double height = 5.9;
 bool isLearning = true;
 
 // Lists (arrays)
-List<String> skills = ['UI Design', 'Coding', 'Testing'];
+final skills = ['UI Design', 'Coding', 'Testing'];
 
 // Functions
 void greet(String name) {
@@ -351,29 +356,30 @@ void main() {
 }`,
                       solution: `void main() {
   // Create a list of strings named 'fruits' with some fruit names
-  List<String> fruits = ['apple', 'banana', 'orange'];
+  // Learn more about Dart lists:
+  final fruitList = ['apple', 'banana', 'orange'];
   
   // Add another fruit to the list using the add() method
-  fruits.add('grape');
+  // Example: fruitList.add('grape');
   
   // Print the list's length
-  print('Total fruits: \\${fruits.length}');
+  // Example: print('Total fruits: \${fruitList.length}');
   
   // Use a for loop to print each fruit
-  for (int i = 0; i < fruits.length; i++) {
-    print('Fruit \\${i+1}: \\${fruits[i]}');
-  }
+  // Example: for (int i = 0; i < fruitList.length; i++) {
+  //   print('Fruit \${i+1}: \${fruitList[i]}');
+  // }
   
   // Alternative: using for-in loop
-  // for (String fruit in fruits) {
+  // Example: for (String fruit in fruitList) {
   //   print('Fruit: \$fruit');
   // }
 }`,
                       hints: [
-                        "Create a list with: List<String> fruits = ['apple', 'banana', 'orange'];",
-                        "Add an item to a list with the add() method: fruits.add('grape');",
-                        "Get a list's length with: fruits.length",
-                        "Loop through a list with: for (int i = 0; i < fruits.length; i++) { ... }"
+                        "Create a list with: final fruitList = ['apple', 'banana', 'orange'];",
+                        "Add an item to a list with the add() method: fruitList.add('grape');",
+                        "Get a list's length with: fruitList.length",
+                        "Loop through a list with: for (int i = 0; i < fruitList.length; i++) { ... }"
                       ]
                     }
                   ]}
