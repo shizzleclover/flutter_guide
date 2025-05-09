@@ -1,10 +1,13 @@
-"use client"
-
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { SimpleCodeBlock } from "@/components/simple-code-block"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, BookOpen, Check, Code2, RefreshCw, Workflow } from "lucide-react"
+
+export const metadata = {
+  title: "State Management in Flutter",
+  description: "Learn different approaches to manage state in your Flutter applications"
+}
 
 export default function StateManagementPage() {
   return (
@@ -194,18 +197,11 @@ export default function StateManagementPage() {
                 <li><strong>BLoC:</strong> The business logic component that transforms events into states</li>
               </ul>
 
-              <Tabs defaultValue="event">
-                <TabsList className="mb-4">
-                  <TabsTrigger value="event">Event</TabsTrigger>
-                  <TabsTrigger value="state">State</TabsTrigger>
-                  <TabsTrigger value="bloc">BLoC</TabsTrigger>
-                  <TabsTrigger value="ui">UI</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="event">
-                  <SimpleCodeBlock
-                    title="counter_event.dart"
-                    code={`import 'package:equatable/equatable.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">Event</h4>
+                <SimpleCodeBlock
+                  title="counter_event.dart"
+                  code={`import 'package:equatable/equatable.dart';
 
 abstract class CounterEvent extends Equatable {
   const CounterEvent();
@@ -217,14 +213,14 @@ abstract class CounterEvent extends Equatable {
 class IncrementEvent extends CounterEvent {}
 
 class DecrementEvent extends CounterEvent {}`}
-                    highlightLines={[3, 9, 11]}
-                  />
-                </TabsContent>
+                />
+              </div>
 
-                <TabsContent value="state">
-                  <SimpleCodeBlock
-                    title="counter_state.dart"
-                    code={`import 'package:equatable/equatable.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">State</h4>
+                <SimpleCodeBlock
+                  title="counter_state.dart"
+                  code={`import 'package:equatable/equatable.dart';
 
 class CounterState extends Equatable {
   final int count;
@@ -234,14 +230,14 @@ class CounterState extends Equatable {
   @override
   List<Object> get props => [count];
 }`}
-                    highlightLines={[3, 4, 6]}
-                  />
-                </TabsContent>
+                />
+              </div>
 
-                <TabsContent value="bloc">
-                  <SimpleCodeBlock
-                    title="counter_bloc.dart"
-                    code={`import 'package:flutter_bloc/flutter_bloc.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">BLoC</h4>
+                <SimpleCodeBlock
+                  title="counter_bloc.dart"
+                  code={`import 'package:flutter_bloc/flutter_bloc.dart';
 import 'counter_event.dart';
 import 'counter_state.dart';
 
@@ -252,23 +248,25 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   }
 
   void _onIncrement(IncrementEvent event, Emitter<CounterState> emit) {
-    // The 'state' here refers to the current state of the bloc
-    emit(CounterState(count: this.state.count + 1));
+    // Access current state via this.state
+    final currentCount = this.state.count;
+    emit(CounterState(count: currentCount + 1));
   }
 
   void _onDecrement(DecrementEvent event, Emitter<CounterState> emit) {
-    // The 'state' here refers to the current state of the bloc
-    emit(CounterState(count: this.state.count - 1));
+    // Access current state via this.state
+    final currentCount = this.state.count;
+    emit(CounterState(count: currentCount - 1));
   }
 }`}
-                    highlightLines={[5, 6, 7, 8, 11, 12, 13, 16, 17, 18]}
-                  />
-                </TabsContent>
+                />
+              </div>
 
-                <TabsContent value="ui">
-                  <SimpleCodeBlock
-                    title="counter_page.dart"
-                    code={`import 'package:flutter/material.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">UI</h4>
+                <SimpleCodeBlock
+                  title="counter_page.dart"
+                  code={`import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'counter_bloc.dart';
 import 'counter_event.dart';
@@ -317,10 +315,8 @@ class CounterView extends StatelessWidget {
     );
   }
 }`}
-                    highlightLines={[10, 11, 12, 22, 23, 24, 36, 41]}
-                  />
-                </TabsContent>
-              </Tabs>
+                />
+              </div>
             </div>
 
             <div className="text-center mb-10">
@@ -417,18 +413,11 @@ dev_dependencies:
                 <li><strong>ConsumerWidget:</strong> Widgets that can read providers</li>
               </ul>
 
-              <Tabs defaultValue="main">
-                <TabsList className="mb-4">
-                  <TabsTrigger value="main">Main</TabsTrigger>
-                  <TabsTrigger value="provider">Provider</TabsTrigger>
-                  <TabsTrigger value="consumer">Consumer</TabsTrigger>
-                  <TabsTrigger value="notifier">Notifier</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="main">
-                  <SimpleCodeBlock
-                    title="main.dart"
-                    code={`import 'package:flutter/material.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">Main</h4>
+                <SimpleCodeBlock
+                  title="main.dart"
+                  code={`import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'counter_page.dart';
 
@@ -451,14 +440,14 @@ class MyApp extends StatelessWidget {
     );
   }
 }`}
-                    highlightLines={[2, 7, 8, 9]}
-                  />
-                </TabsContent>
+                />
+              </div>
 
-                <TabsContent value="provider">
-                  <SimpleCodeBlock
-                    title="counter_provider.dart"
-                    code={`import 'package:riverpod_annotation/riverpod_annotation.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">Provider</h4>
+                <SimpleCodeBlock
+                  title="counter_provider.dart"
+                  code={`import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Generate provider using code generation
 part 'counter_provider.g.dart';
@@ -473,23 +462,25 @@ class Counter extends _$Counter {
   
   // Methods to update state
   void increment() {
-    // 'state' here refers to the Counter class's state property
-    state = state + 1;
+    // 'state' is a property of the Counter class
+    final currentState = state;
+    state = currentState + 1;
   }
   
   void decrement() {
-    // 'state' here refers to the Counter class's state property
-    state = state - 1;
+    // 'state' is a property of the Counter class
+    final currentState = state;
+    state = currentState - 1;
   }
 }`}
-                    highlightLines={[6, 7, 8, 9, 10, 14, 15, 16, 19, 20, 21]}
-                  />
-                </TabsContent>
+                />
+              </div>
 
-                <TabsContent value="consumer">
-                  <SimpleCodeBlock
-                    title="counter_page.dart"
-                    code={`import 'package:flutter/material.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">Consumer</h4>
+                <SimpleCodeBlock
+                  title="counter_page.dart"
+                  code={`import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'counter_provider.dart';
 
@@ -527,14 +518,14 @@ class CounterPage extends ConsumerWidget {
     );
   }
 }`}
-                    highlightLines={[6, 7, 8, 10, 25, 30]}
-                  />
-                </TabsContent>
+                />
+              </div>
 
-                <TabsContent value="notifier">
-                  <SimpleCodeBlock
-                    title="Advanced: Async Notifier"
-                    code={`import 'package:riverpod_annotation/riverpod_annotation.dart';
+              <div className="mb-4">
+                <h4 className="text-lg font-medium mb-2">Notifier</h4>
+                <SimpleCodeBlock
+                  title="Advanced: Async Notifier"
+                  code={`import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
 import 'todo_model.dart';
 
@@ -556,8 +547,11 @@ class TodosNotifier extends _$TodosNotifier {
   
   Future<void> addTodo(Todo todo) async {
     // Optimistically update the UI
-    // 'state' here refers to the TodosNotifier class's state property
-    state = AsyncValue.data([...state.value!, todo]);
+    // Using a local variable to avoid directly referencing 'state'
+    final currentState = state;
+    if (currentState.value != null) {
+      state = AsyncValue.data([...currentState.value!, todo]);
+    }
     
     try {
       // Make the API call
@@ -571,10 +565,8 @@ class TodosNotifier extends _$TodosNotifier {
     }
   }
 }`}
-                    highlightLines={[7, 8, 9, 10, 11, 21, 22, 23, 24]}
-                  />
-                </TabsContent>
-              </Tabs>
+                />
+              </div>
             </div>
 
             <div className="text-center mb-10">
